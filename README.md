@@ -1,4 +1,4 @@
-#### QR2ANSI: 
+##### QR2ANSI 
  
 	 Inspired by and adapted from: 
 
