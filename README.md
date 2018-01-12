@@ -1,5 +1,6 @@
 #### QR2ANSI: 
  
+	 Inspired by and adapted from: 
 
     https://gist.github.com/michaelschrijver/8566294
 
