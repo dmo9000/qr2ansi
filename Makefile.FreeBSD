@@ -1,0 +1,7 @@
+LDFLAGS = -L/usr/local/lib -lqrencode 
+CFLAGS = -I/usr/local/include
+
+all: qr2
+
+clean:
+		rm -f qr2
