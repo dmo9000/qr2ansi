@@ -74,6 +74,7 @@ static void vertical_border(int my_width) {
         putchar('\n');
     }
 }
+
 static void put_qrcode (const char *str) {
     bool upper = false;
     bool lower = false;
@@ -103,8 +104,9 @@ static void put_qrcode (const char *str) {
 
     QRcode_free (qr);
 }
+
 int main (int argc, char *argv[]) {
-    int i;
+    uint8_t i;
     for (i = 1 ; i < argc ; i++) {
         put_qrcode (argv[i]);
     }
