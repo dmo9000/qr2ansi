@@ -19,10 +19,16 @@
 */
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include <assert.h>
 #include <qrencode.h>
 
+#define DEFAULT_WIDTH		79	
+#define DEFAULT_HEIGHT	23
+
+uint8_t tty_width;
+uint8_t tty_height;
 
 static const int border = 4;
 
@@ -50,17 +56,21 @@ static void put_block (bool upper, bool lower) {
 
     assert(NULL);
 }
-static void horizontal_border(void) {
-    int x;
-    for (x = 0 ; x < border ; x++)
+
+static void horizontal_border(uint8_t my_padding) {
+   	uint8_t x;
+    for (x = 0 ; x < my_padding ; x++) {
         put_block(true, true);
+				}
 }
-static void vertical_border(int qr_width) {
-    int x, y;
+
+static void vertical_border(int my_width) {
+    uint8_t x, y;
 
     for (y = 0 ; y < border ; y++) {
-        for (x = 0 ; x < (qr_width + (2* border)) ; x++)
+        for (x = 0 ; x < my_width ; x++) {
             put_block(true, true);
+					}
         putchar('\n');
     }
 }
@@ -68,12 +78,16 @@ static void put_qrcode (const char *str) {
     bool upper = false;
     bool lower = false;
     QRcode *qr = QRcode_encodeString(str, 0, QR_ECLEVEL_H, QR_MODE_8, 1);
-    int x, y;
+		uint8_t x, y; 
+		uint8_t padding = 0;
 
-    vertical_border (qr->width);
+		tty_width = DEFAULT_WIDTH;
+		tty_height = DEFAULT_HEIGHT;
 
+		padding = (tty_width - qr->width) / 2; 
+		vertical_border(tty_width);
     for (y = 0 ; y < qr->width ; y+=2) {
-        horizontal_border ();
+        horizontal_border (padding);
         for (x = 0 ; x < qr->width ; x++) {
             upper = !(qr->data[y * qr->width + x] & 1);
             lower = !(qr->data[(y+1) * qr->width + x] & 1);
@@ -82,11 +96,10 @@ static void put_qrcode (const char *str) {
             }
             put_block(upper, lower);
         }
-        horizontal_border ();
+        horizontal_border (padding);
         putchar('\n');
     }
-
-    vertical_border (qr->width);
+		vertical_border(tty_width);
 
     QRcode_free (qr);
 }

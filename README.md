@@ -1,9 +1,10 @@
-### Inspired by and adapted from: 
+#### QR2ANSI: 
+ 
 
     https://gist.github.com/michaelschrijver/8566294
 
    That version is great, but I needed a version that used CP437 half blocks 
-   blocks in order to make the code fit more easily on an 80x24 terminal 
+   in order to make the code fit more easily on an 80x24 terminal 
 
    Compile with: 
 
